@@ -1,0 +1,46 @@
+{
+  "type": "screen",
+  "appBar": {
+    "title": "Detalhe do Produto",
+    "backgroundColor": "primary"
+  },
+  "body": {
+    "type": "column",
+    "children": [
+      {
+        "type": "image",
+        "src": "${images[0]}",
+        "width": 220,
+        "height": 220,
+        "fit": "cover"
+      },
+      {
+        "type": "image",
+        "src": "${images[0]}",
+        "width": 220,
+        "height": 220,
+        "fit": "cover"
+      },
+      {
+        "type": "text",
+        "text": "${title}"
+      },
+      {
+        "type": "text",
+        "text": "Preço: ${price}"
+      },
+      {
+        "type": "text",
+        "text": "${description}"
+      },
+      {
+        "type": "text",
+        "text": "Categoria: ${category.name}"
+      }
+    ]
+  },
+  "footer": {
+    "type": "text",
+    "text": "Detalhe do produto via SDUI"
+  }
+}

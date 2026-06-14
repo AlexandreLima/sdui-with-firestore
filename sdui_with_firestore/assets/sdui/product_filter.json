@@ -1,0 +1,40 @@
+{
+  "type": "screen",
+  "appBar": {
+    "title": "Categorias",
+    "backgroundColor": "primary"
+  },
+  "body": {
+    "type": "column",
+    "children": [
+      {
+        "type": "text",
+        "text": "Filtre produtos por categoria"
+      },
+      {
+        "type": "list",
+        "source": "categories",
+        "item": {
+          "type": "card",
+          "action": {
+            "type": "openCategory"
+          },
+          "children": [
+            {
+              "type": "text",
+              "text": "${name}"
+            },
+            {
+              "type": "text",
+              "text": "${image}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "footer": {
+    "type": "text",
+    "text": "Categorias carregadas offline"
+  }
+}

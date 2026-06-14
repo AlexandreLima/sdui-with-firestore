@@ -17,16 +17,17 @@ sdui-with-firestore/
 └── Api/                    # Recursos de API REST de dados (Postman Collection)
 ```
 
-### 📦 Detalhamento dos Componentes
+### 📱 Telas do Aplicativo (Renderização SDUI)
 
-1. **`sdui_with_firestore` (Flutter App)**:
-   Contém o motor de renderização dinâmica (`SduiEngine`) responsável por processar e renderizar os nós visuais (Screen, Card, Column, Row, Text, Image, List) a partir dos contratos JSON, unindo-os com os dados recebidos das APIs REST de negócios em tempo de execução (*data-binding*).
-   
-2. **`seed` (Node.js Seed Utility)**:
-   Ferramenta de linha de comando para ler, validar a sintaxe e fazer o upload dos arquivos JSON das telas (`product_detail.json`, `product_filter.json` e `product_list.json`) para a coleção `sdui_templates` no Firestore. Funciona tanto com o **Firestore Emulator** local quanto com o Firestore em nuvem.
-   
-3. **`Api` (Coleção REST)**:
-   Contém arquivos de suporte (coleções do Postman em `postman.json`) documentando as APIs REST utilizadas como fontes de dados de negócios (neste exemplo, simulando um e-commerce com a Fake Store API do *Platzi Escuelas*).
+Aqui está a demonstração visual das telas renderizadas pelo aplicativo Flutter de forma dinâmica com base nos JSONs carregados do Firestore:
+
+| 1. Filtro de Categorias (Home) | 2. Lista de Produtos por Categoria | 3. Detalhes do Produto |
+| :---: | :---: | :---: |
+| ![Categorias](docs/images/sdui_categories_screen.png) | ![Produtos](docs/images/sdui_products_screen.png) | ![Detalhe do Produto](docs/images/sdui_product_detail_screen.png) |
+
+- **Categorias (Home)**: Renderiza um filtro dinâmico de categorias buscadas da API e alimentadas para o layout SDUI. O rodapé indica o carregamento em cache local.
+- **Lista de Produtos**: Carrega a lista com imagens, títulos e preços das mercadorias, exibindo o indicador de carregamento via SDUI.
+- **Detalhes do Produto**: Exibe imagens e informações detalhadas estruturadas em colunas dinâmicas alimentadas por placeholders de data-binding.
 
 ---
 
@@ -54,6 +55,22 @@ graph TD
 - **Zero Latência de Rede na Navegação**: O app carrega os templates do disco local instantaneamente (menos de 10ms).
 - **Consumo de Banda Reduzido**: Navegar de volta para uma tela não consome chamadas do servidor.
 - **Sincronização Passiva**: Sempre que um template é atualizado no Firestore, o listener recebe a atualização silenciosamente e a salva localmente para a próxima renderização.
+
+---
+
+### 🗃️ Banco de Dados & Logs de Consulta (Firestore Emulator)
+
+Para validar a otimização de Cache-First e a eliminação de requisições GET redundantes, observe as capturas do **Firebase Emulator Suite**:
+
+#### 1. Coleções no Firestore
+Demonstra os templates salvos na coleção `sdui_templates` sob o formato `{ template: Map, updatedAt: Timestamp }`:
+
+![Estrutura de Coleções no Firestore](docs/images/firebase_emulator_data.png)
+
+#### 2. Log de Requisições do Firestore
+Exemplo de log de conexões onde a navegação ocorre de forma transparente consumindo apenas o cache local, sem disparar requisições GET constantes para o servidor gRPC a cada transição de tela:
+
+![Log de Consultas do Firestore](docs/images/firebase_emulator_requests.png)
 
 ---
 
@@ -107,43 +124,3 @@ cd sdui_with_firestore
 flutter pub get
 flutter run
 ```
-
----
-
-## 🎨 Estrutura do Documento de Layout no Firestore
-
-Cada documento na coleção `sdui_templates` representa um layout de tela. Exemplo de estrutura do documento `product_detail` gerado pelo seed:
-
-```json
-{
-  "template": {
-    "type": "screen",
-    "appBar": {
-      "title": "Detalhe do Produto",
-      "backgroundColor": "primary"
-    },
-    "body": {
-      "type": "column",
-      "children": [
-        {
-          "type": "image",
-          "src": "${images[0]}",
-          "width": 220,
-          "height": 220,
-          "fit": "cover"
-        },
-        {
-          "type": "text",
-          "text": "${title}"
-        },
-        {
-          "type": "text",
-          "text": "Preço: ${price}"
-        }
-      ]
-    }
-  },
-  "updatedAt": "Timestamp"
-}
-```
-*Nota: Marcadores como `${title}` e `${price}` são substituídos dinamicamente pelo `SduiEngine` em tempo de execução pelos dados correspondentes vindos das APIs.*
