@@ -1,0 +1,27 @@
+# OS files
+.DS_Store
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Firebase debug logs and local cache
+firebase-debug.log
+firestore-debug.log
+.firebase/
+
+# Private Credentials / Secrets
+service-account.json
+credentials.json
+*.local
+.env
+.env.*
+
+# IDE configs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws

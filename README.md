@@ -17,6 +17,17 @@ sdui-with-firestore/
 └── Api/                    # Recursos de API REST de dados (Postman Collection)
 ```
 
+### 🌐 APIs de Negócios (Fonte de Dados)
+
+Os dados dinâmicos exibidos nas telas do aplicativo (categorias e produtos) são consumidos de serviços externos fornecidos pela **Platzi Fake Store API**.
+
+Para mais detalhes sobre os contratos de dados e rotas:
+- **Site Oficial da API**: [Platzi Fake Store API](https://fakeapi.platzi.com/)
+- **Documentação de Introdução**: [Platzi API Docs - Introduction](https://fakeapi.platzi.com/en/about/introduction/)
+- **Swagger/OpenAPI UI**: [Platzi EscuelaJS API Swagger](https://api.escuelajs.co/docs#/)
+
+---
+
 ### 📱 Telas do Aplicativo (Renderização SDUI)
 
 Aqui está a demonstração visual das telas renderizadas pelo aplicativo Flutter de forma dinâmica com base nos JSONs carregados do Firestore:
